@@ -23,7 +23,12 @@ class App:
         self.ai.load_model(str(self.ai.model_version))
 
         # File to store counters
-        self.COUNTERS_FILE = './Number_Recognition/counters.json'
+        if os.path.exists('./Number_Recognition/counters.json'):
+            self.COUNTERS_FILE = './Number_Recognition/counters.json'
+        else:
+            # make a counter.js file
+            with open('./Number_Recognition/counters.json', 'w') as file:
+                json.dump({'correct': 0, 'incorrect': 0}, file)
 
         # Load the counters when the app starts
         self.c_counter, self.i_counter = self.load_counters()
