@@ -20,7 +20,7 @@ class App:
         self.canvas = Canvas(self.window, bg="black", height=self.canvas_height, width=self.canvas_width)
         self.window.attributes('-topmost', True)
         self.ai = AI()
-        self.ai.load_model("0.2")
+        self.ai.load_model(str(self.ai.model_version))
 
         # File to store counters
         self.COUNTERS_FILE = './Number_Recognition/counters.json'

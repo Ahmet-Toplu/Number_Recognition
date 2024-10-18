@@ -15,7 +15,10 @@ class AI:
         # unprocessed data, kept for later
         self.raw_test_images, self.raw_test_labels = self.test_images, self.test_labels
 
-        self.model_version = "0.2"
+        # finding the latest model version
+        versions = [v.rsplit('.keras')[0] for v in os.listdir('./Number_Recognition/models') if v.endswith('.keras')]
+        versions.sort()
+        self.model_version = versions[-1]
 
     # making a window and displaying the last couple
     def mnist_peek(self, rows, cols):
@@ -135,7 +138,7 @@ class AI:
 
         return image
 
-    def test(self):
+    def update(self):
         new_images_array = [image for image in os.listdir('./Number_Recognition/images') if image.endswith('.bmp')]
         new_image_labels = [int(image.split('_')[-1].split('.')[0]) for image in new_images_array]
         self.new_images_array = []
@@ -149,16 +152,28 @@ class AI:
         self.new_images_array = np.vstack(self.new_images_array)
 
         # One-hot encode the labels
+
+        if len(self.train_images.shape) == 3:
+            self.train_images = self.train_images.reshape((self.train_images.shape[0], 28 * 28))
+
+        if len(self.train_labels.shape) == 1:
+            self.train_labels = tf.keras.utils.to_categorical(self.train_labels, num_classes=10)
+
         self.new_image_labels = tf.keras.utils.to_categorical(new_image_labels, num_classes=10)
 
-        print("New images shape:", self.new_images_array.shape)  # Should be (number of images, 784)
-        print("New labels shape:", self.new_image_labels.shape)  # Should be (number of images, num_classes)
+        self.train_images = np.vstack((self.train_images, self.new_images_array))
+        self.train_labels = np.vstack((self.train_labels, self.new_image_labels))
 
-        # Now you can fit the model
-        self.model.fit(self.new_images_array, self.new_image_labels, epochs=10, batch_size=32)
-        self.save_model(self.model_version)
+        # Adjust the learning rate for update
+        self.model.optimizer.learning_rate.assign(0.0001)
+
+        self.model.fit(self.train_images, self.train_labels, epochs=5, batch_size=128)
+
+        new_version = float(self.model_version) + 0.1
+        self.save_model(str(new_version))
+
 
 if __name__ == "__main__":
     ai = AI()
-    ai.load_model("0.2")
-    ai.test()
+    ai.train()
+    ai.update()
