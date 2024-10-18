@@ -26,7 +26,7 @@ class AI:
         for i in range(rows):
             for j in range(cols):
                 axs[i, j].imshow(self.train_images[i*cols + j], cmap='gray')
-                axs[i, j].set_title(self.train_labels[i*cols + j], fontsize=plt_fontsize)
+                axs[i, j].set_title(self.train_labels[i*cols + j], fontsize=self.plt_fontsize)
                 axs[i, j].axis('off')
         plt.show()
 
