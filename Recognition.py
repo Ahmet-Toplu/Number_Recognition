@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 import matplotlib
 import os
 
-np.set_printoptions(linewidth=150)
-plt_fontsize = matplotlib.rcParams['font.size']
 
 class AI:
     def __init__(self):
+        np.set_printoptions(linewidth=150)
+        self.plt_fontsize = matplotlib.rcParams['font.size']
         # loading the training and testing data, which are images for this example
         (self.train_images, self.train_labels), (self.test_images, self.test_labels) = tf.keras.datasets.mnist.load_data()
 
@@ -53,10 +53,6 @@ class AI:
 
         self.train_labels = tf.keras.utils.to_categorical(self.train_labels) # encode with the nifty `to_categorical` function
         self.test_labels  = tf.keras.utils.to_categorical(self.test_labels)
-
-        # images = [image for image in os.listdir('./Number_Recognition/images') if image.endswith('.png')]
-        # print(images)
-        # self.new_images = tk.keras.preprocessing.image.load_img('./Number_Recognition/images', color_mode='grayscale', target_size=(28, 28))
 
         # an empty model
         self.model = tf.keras.models.Sequential()
