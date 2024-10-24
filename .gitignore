@@ -4,3 +4,6 @@ __pycache__/
 
 # Ignore image files
 *images/
+
+#  Ignore counters
+counters.json
