@@ -6,7 +6,7 @@ __pycache__/
 *images/
 
 # Ignore model files
-*model/
+*models/
 
 # Ignore counters.js files
 counters.json
