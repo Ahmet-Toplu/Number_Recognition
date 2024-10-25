@@ -23,11 +23,11 @@ class App:
         self.ai.load_model(str(self.ai.model_version))
 
         # File to store counters
-        if os.path.exists('./Number_Recognition/counters.json'):
-            self.COUNTERS_FILE = './Number_Recognition/counters.json'
+        if os.path.exists('./counters.json'):
+            self.COUNTERS_FILE = './counters.json'
         else:
             # make a counter.js file
-            with open('./Number_Recognition/counters.json', 'w') as file:
+            with open('./counters.json', 'w') as file:
                 json.dump({'correct': 0, 'incorrect': 0}, file)
 
         # Load the counters when the app starts
@@ -90,7 +90,7 @@ class App:
         resized_image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
         
         # Ensure the directory exists before saving the file
-        output_dir = "./Number_Recognition/images"
+        output_dir = "./images"
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
         
@@ -105,8 +105,8 @@ class App:
     # ask user input for the correct number
     def incorrect(self, prediction):
         self.entry = askinteger("Correct Number", "Enter the correct number")
-        new_filename = f"./Number_Recognition/images/incorrect_{self.i_counter}_predicted_{prediction}_label_{self.entry}.bmp"
-        os.rename("./Number_Recognition/images/resized_canvas_image.bmp", new_filename)
+        new_filename = f"./images/incorrect_{self.i_counter}_predicted_{prediction}_label_{self.entry}.bmp"
+        os.rename("./images/resized_canvas_image.bmp", new_filename)
         self.i_counter += 1
         self.save_counters()  # Save the updated counters
         self.ai.fine_tune_model(new_filename, int(self.entry))
@@ -114,8 +114,8 @@ class App:
 
     def correct(self, prediction):
         self.entry = askinteger("Correct Number", "Enter the correct number")
-        new_filename = f"./Number_Recognition/images/correct_{self.c_counter}_predicted_{prediction}_label_{self.entry}.bmp"
-        os.rename("./Number_Recognition/images/resized_canvas_image.bmp", new_filename)
+        new_filename = f"./images/correct_{self.c_counter}_predicted_{prediction}_label_{self.entry}.bmp"
+        os.rename("./images/resized_canvas_image.bmp", new_filename)
         self.c_counter += 1
         self.save_counters()  # Save the updated counters
         self.clear_canvas()
