@@ -165,11 +165,11 @@ class AI:
 
         self.model.fit(self.train_images, self.train_labels, epochs=5, batch_size=128)
 
-        new_version = float(self.model_version) + 0.1
+        new_version = round(float(self.model_version) + 0.1, 1)
         self.save_model(str(new_version))
 
 
 if __name__ == "__main__":
     ai = AI()
-    ai.train()
+    ai.load_model(ai.model_version)
     ai.update()
