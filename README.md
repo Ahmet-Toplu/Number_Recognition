@@ -1,6 +1,6 @@
 # Number Recognition Program
 ## Overview
-This Number Recognition Program is a machine learning project developed by a university student as part of a learning journey in understanding neural networks and their applications. The program uses a simple neural network to recognize handwritten digits (0-9) and aims to showcase the foundational principles of neural network architecture, training, and inference.
+This Number Recognition Program is a machine learning project that I developed as university student as part of a learning journey in understanding neural networks and their applications. The program uses a simple neural network to recognize handwritten digits (0-9) and aims to showcase the foundational principles of neural network architecture, training, and inference.
 
 ## Features
 - **Digit Classification:** Recognizes handwritten numbers from 0 to 9.
